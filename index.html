@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PeerLink — Chat & File Sharing</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">P</div>
+      <div class="brand-copy"><strong>PeerLink</strong><span>Decentralized File Sharing & Chat</span></div>
+      <div class="top-status"><span class="status-dot" id="connectionDot"></span><span id="connectionLabel">Not connected</span></div>
+    </header>
+
+    <main class="main-layout">
+      <aside class="sidebar">
+        <div class="sidebar-title">WORKSPACE</div>
+        <div class="nav-item active"><span>▤</span> Chat room</div>
+        <div class="nav-item"><span>⇧</span> File sharing</div>
+        <div class="nav-item"><span>◎</span> Connected peers</div>
+        <div class="sidebar-note">
+          <div class="note-icon">↔</div>
+          <strong>How it works</strong>
+          <p>Join the same room from two browsers to chat and share files.</p>
+        </div>
+        <div class="sidebar-bottom"><span class="status-dot green"></span> Demo server online</div>
+      </aside>
+
+      <section class="workspace">
+        <section class="join-panel" id="joinPanel">
+          <div class="eyebrow">WELCOME TO PEERLINK</div>
+          <h1>Connect directly.<br><span>Share freely.</span></h1>
+          <p class="intro">Create a room or join an existing one to start a live conversation and share files.</p>
+          <form id="joinForm" class="join-form">
+            <label for="username">Your username</label>
+            <input id="username" maxlength="24" placeholder="e.g. Abhilash" required autocomplete="nickname">
+            <label for="room">Room ID</label>
+            <div class="room-input-row"><input id="room" maxlength="40" placeholder="e.g. college-project" required><button type="button" class="secondary small" id="generateRoom">Generate</button></div>
+            <button class="primary join-button" type="submit">Join chat room <span>→</span></button>
+          </form>
+          <div class="join-hint">Tip: Use the same Room ID in both browser tabs. Use different usernames.</div>
+        </section>
+
+        <section class="chat-layout hidden" id="chatPanel">
+          <div class="chat-main">
+            <div class="room-header">
+              <div><div class="eyebrow">CURRENT ROOM</div><h2 id="roomTitle">Room</h2><p id="roomSubtitle">Waiting for peers...</p></div>
+              <button class="secondary" id="copyRoom">Copy room ID</button>
+            </div>
+            <div class="peer-strip" id="peerStrip"><span class="status-dot"></span> Waiting for another user to join…</div>
+            <div class="messages" id="messages" aria-live="polite">
+              <div class="empty-state" id="emptyState"><div class="empty-icon">✉</div><strong>Your conversation starts here</strong><p>Send a message below. Open this page in another tab and join the same room to test it.</p></div>
+            </div>
+            <form class="composer" id="messageForm">
+              <input id="messageInput" placeholder="Join the room to enable messaging…" maxlength="2000" disabled autocomplete="off">
+              <button class="primary send-button" id="sendButton" type="submit" disabled>Send <span>➤</span></button>
+            </form>
+            <div class="composer-foot"><span>Enter to send</span><span>Room messages are visible to everyone in the room</span></div>
+          </div>
+          <aside class="right-panel">
+            <div class="panel-block">
+              <div class="panel-heading"><strong>People in room</strong><span class="count-badge" id="peerCount">0</span></div>
+              <div id="peerList" class="peer-list"><div class="muted small-text">No one connected yet</div></div>
+            </div>
+            <div class="panel-block file-panel">
+              <div class="panel-heading"><strong>Share a file</strong><span class="file-symbol">⇧</span></div>
+              <p class="muted small-text">Choose a file to send to everyone else in this room. Demo limit: 8 MB.</p>
+              <label for="fileInput" class="drop-zone" id="dropZone"><span class="upload-icon">↑</span><strong>Choose a file</strong><span>or drag it here</span><input type="file" id="fileInput" disabled></label>
+              <div id="selectedFile" class="selected-file hidden"></div>
+              <button class="primary full-width" id="sendFileButton" disabled>Share selected file</button>
+              <div class="transfer-status" id="transferStatus">Join a room to enable file sharing.</div>
+            </div>
+            <div class="panel-block">
+              <div class="panel-heading"><strong>Received files</strong><span class="count-badge" id="fileCount">0</span></div>
+              <div id="receivedFiles" class="received-files"><div class="muted small-text">Files shared by other users will appear here.</div></div>
+            </div>
+            <button class="leave-button" id="leaveButton">← Leave room</button>
+          </aside>
+        </section>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status"></div>
+    <footer>PeerLink academic project demo <span>•</span> Room-based chat & file sharing</footer>
+  </div>
+  <script src="/config.js"></script>
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
